@@ -1,5 +1,5 @@
 ## Azure Databricks  - Python & Dev Ops
-#### Editted and updated by Brandon Lee on 7/30/2019
+#### Updated and Editted and updated by Brandon Lee on 7/30/2019
 
 ## Hands on Lab – Abstract
 This hands on lab is designed for the scenario where a team of scientists and engineers are responsible for the development, maintenance and quality of analytical models which are made available to other teams for consumption.
@@ -309,26 +309,26 @@ Configure Azure Dev Ops Integrations
 
 ![alt text](./readme_images/adb_create_folder.png)
 
-2.	Name the folder “Project_One”
-3.	Create a new file inside the project called “train_model”.
+2.	Name the folder “adbmeetup-project”
+3.	Create a new file inside the project called “adbmeetup_train_model”.
 
 ![alt text](./readme_images/adb_create_notebook.png)
 
-4.	Link “train_model.py” file to your Azure Dev Ops repository.
+4.	Link “adbmeetup_train_model.py” file to your Azure Dev Ops repository.
 a.	Copy the git link from your azure dev ops portal:
 
 ![alt text](./readme_images/copy_ado_git_link.png)
 
 b.	Paste into the “link” location in the popup for “Git Preferences”
 c.	Create a new branch.  Name it your unique user ID
-d.	Use “Project_One/notebooks/train_model.py” as the path in git repo.
+d.	Use “adbmeetup-project/adbmeetup_train_model.py” as the path in git repo.
 
 ![alt text](./readme_images/adb_git_link_settings_form.png)
 
 # Dev Loop Experience
 The dev loop experience encompasses mounting the dev data, exploring that data, training a model; writing the inference code, compiling a dev container; running tests inside the dev container.
 ## Train the world’s worst regression & Stage for inference coding.
-1.	Copy the code from Project_One/notebooks/train_model.py into your databricks train_model.py which was created earlier.
+1.	Copy the code from adbmeetup-project/adbmeetup_train_model.py into your databricks adbmeetup_train_model.py which was created earlier.
 1.  The proctor will step through what exactly the code is doing and why.
     1.  Essentially: The precreated secrets are being used to mount to various stores securely and will allow zero code changes as the algorithm progresses across secure environments.  
     2.  You train a super simple algorithm and register the resulting model files with the AZML service such that we can bridge the divide between databricks and inference coding.  This process is ML Framework independent and can be used cross algorithms, frameworks etc.
@@ -341,7 +341,7 @@ Code Structure
 
 Good Code Structure from the beginning is a great way to ensure you are set up well.  In this case we are going to follow well defined development strategies via a bit of a hybrid between .net project structures and python project structures.
  
-We have two folders for each project.  Project_One is the primary inference project
+We have two folders for each project.  adbmeetup-project is the primary inference project
 ### Git Pull the train code
 1.	Open a cmd prompt.
 2.	Change directory into the root of where your project is.
@@ -357,11 +357,11 @@ You should always start with testing and then writing code to satisfy those test
  
 Inside this file we will write a very simple unit test to ensure that the x_scaler object is populated during model initialization.
 
-1.  An example unit test has already been written.  Add 1 more unit test to Project_One-Tests/test_model.py.
+1.  An example unit test has already been written.  Add 1 more unit test to adbmeetup-project-Tests/test_model.py.
 2.  The facilitation code follows standard pytest rules, so you can even add more test files etc; just follow pytest conventions.
 3.  The proctor will run through how the project works.
-    1.  Project_One is the project code which seperates the inference code as a "provider" type class following similiar principals from the testable web dev space.  
-    2.  Project_One-Tests is your seperated testing code such that it is not coupled with your app development code.
+    1.  adbmeetup-project is the project code which seperates the inference code as a "provider" type class following similiar principals from the testable web dev space.  
+    2.  adbmeetup-project-Tests is your seperated testing code such that it is not coupled with your app development code.
     3.  A container is built for the inference code, which is then extended with the test code.  The base inference container is the asset expected to be deployed while the extended testing container allows you to test the assets in the same type of format as if they were to be compiled.
 
 #### Review Inference Code
@@ -372,7 +372,7 @@ Normally we would test and ensure the tests fail before writing the inference co
 In an ideal world, the only code you would need to worry about is highlighted in red.  The current state of tooling as of today is why the other code exists and is not wrapped up as ADO Tasks or VS Code extensions.  
 
 The proctor will run through the code with your, but essentially:
-1.  ./Project_One/score.py is what the azure ml sdk expects as the interface and must be populated with an init() and a run(params).  The params are what is received in the http request body (or iot edge message over the route)
+1.  ./adbmeetup-project/score.py is what the azure ml sdk expects as the interface and must be populated with an init() and a run(params).  The params are what is received in the http request body (or iot edge message over the route)
 2.  The code placed in inference_code is to help ensure code coverage is reported appropriately.  We follow a similar provider type structure as in web dev when there is a pre-defined functional interface.  The objective is to minimize that footprint to 1 line of code. (in score.py init and run)
 3.  The rest of the code is a dockerized build process that can run independent of the dependencies installed on your system such that the build on your machine is the same as the build in the build server improving confidence the locally generated and tested asset will match the asset which has probability of being promoted to production.
 
@@ -385,7 +385,7 @@ ii.	Ml_resource_group
 iii.	Ml_workspace_name
 iv.	Ml_alg_author
 From the command prompt:
-1.	Change directory into the Project_One folder.
+1.	Change directory into the adbmeetup-project folder.
 2.	Run the runbuild_local.cmd
 a.	You may need to execute az login prior to executing this command or be interactively logged in (watch the output)
 
@@ -396,7 +396,7 @@ c.	This will execute a bunch of stuff and be on “Creating image” for a while
 ![alt text](./readme_images/successful_local_build.png)
 
 ### Test Inference Container
-1.	Change directory into the Project_One-Tests folder.
+1.	Change directory into the adbmeetup-project-Tests folder.
 2.	Run the runtests_local.cmd file
 3.	This will extend the container you created in the previous step, run your unit tests and check your code coverage.  The code coverage results can be found in C:/ml_temp/artifacts/test_results  These are standard pytest and pytest-cov result outputs.
 
