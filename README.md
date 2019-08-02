@@ -226,11 +226,15 @@ c.	Or simply append #secrets/createScope to the end of the url of your workspace
 
 ![alt text](./readme_images/copy_kv_resource_id.png)
 
-5.	Name the scope “data-lake”, set for “All Users”.  Populate the dns name and resource id of the key vault. And select “Create".
+5.	Go to Create Secrete page in databricks url: https://westus2.azuredatabricks.net#secrets/createScope You need to add #secrets/createScope after https://westus2.azuredatabricks.net url address
+
+![alt text](./readme_images/adb_create_secret_creation.png)
+
+6.	Name the scope “data-lake”, set for “All Users”.  Populate the dns name and resource id of the key vault. And select “Create".
 
 ![alt text](./readme_images/adb_create_secret_scope.png)
 
-6.	From the databricks CLI, enter the command: “databricks secrets list-scopes –profile [YOUR PROFILE]
+7.	From the databricks CLI, enter the command: “databricks secrets list-scopes –profile [YOUR PROFILE]
 
 ![alt text](./readme_images/confirm_kv_backed_secret_scope.png)
 
